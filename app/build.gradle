@@ -13,6 +13,7 @@ android {
         versionName rootProject.ext.versionName
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         buildConfigField "String", "MOVIE_DB_API_KEY", "\"${MOVIE_DB_API_KEY}\""
+        multiDexEnabled true
     }
     buildTypes {
         release {
@@ -27,9 +28,8 @@ android {
     dataBinding {
         enabled = true
     }
-    sourceSets {
-        androidTest.java.srcDirs += "src/commonTest/java"
-        test.java.srcDirs += "src/commonTest/java"
+    configurations {
+        all*.exclude group: 'com.google.guava', module: 'listenablefuture'
     }
 }
 
@@ -39,12 +39,14 @@ dependencies {
     implementation "androidx.appcompat:appcompat:$rootProject.ext.appcompatVersion"
     implementation "com.google.android.material:material:$rootProject.ext.materialVersion"
     implementation "androidx.constraintlayout:constraintlayout:$rootProject.ext.contraintlayoutVersion"
+    implementation "com.google.guava:guava:$rootProject.guavaVersion"
     // Kotlin
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVersion"
     implementation "org.jetbrains.anko:anko:$rootProject.ext.ankoVersion"
     // Room
     implementation "androidx.room:room-runtime:$rootProject.ext.roomVersion"
     kapt "androidx.room:room-compiler:$rootProject.ext.roomVersion"
+    implementation "android.arch.persistence.room:rxjava2:$rootProject.ext.rxRoomVersion"
     // Dependency injection
     implementation "com.google.dagger:dagger:$rootProject.ext.daggerVersion"
     implementation "com.google.dagger:dagger-android:$rootProject.ext.daggerVersion"
@@ -78,4 +80,5 @@ dependencies {
     androidTestImplementation "androidx.test:core:$rootProject.ext.testCoreVersion"
     androidTestImplementation "com.android.support.test:runner:$rootProject.ext.testRunnerVersion"
     androidTestImplementation "com.android.support.test.espresso:espresso-core:$rootProject.ext.espressoCoreVersion"
+    androidTestImplementation "android.arch.core:core-testing:$rootProject.ext.rxRoomVersion"
 }
