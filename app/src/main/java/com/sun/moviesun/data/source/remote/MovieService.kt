@@ -6,11 +6,11 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
 
-interface DiscoverService {
+interface MovieService {
 
   @GET("trending/movie/day")
-  fun fetchMoviesTrendingByDay(): Flowable<MovieResponse>
+  fun getMoviesTrendingByDay(): Flowable<ApiResponse<MovieResponse>>
 
   @GET("movie/{type}?language=en&sort_by=popularity.desc")
-  fun fetchMoviesCategory(@Path("type") @CategoryKey category: String?, @Query("page") page: Int): Flowable<MovieResponse>
+  fun getMoviesCategory(@Path("type") @CategoryKey category: String?, @Query("page") page: Int): Flowable<ApiResponse<MovieResponse>>
 }
