@@ -3,18 +3,15 @@ package com.sun.moviesun.data.model.entity
 import android.os.Parcel
 import android.os.Parcelable
 import androidx.room.Entity
-import androidx.room.Index
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 import com.sun.moviesun.data.model.Keyword
 import com.sun.moviesun.data.model.Review
 import com.sun.moviesun.data.model.Video
-import com.sun.moviesun.data.source.remote.CategoryKey
 
-@Entity(tableName = "movies", indices = [Index(value = ["id", "category"], unique = true)])
+@Entity(tableName = "movies")
 data class Movie(
     @PrimaryKey
-    var autoId: Int,
     var id: Int,
     var page: Int,
     var title: String?,
@@ -40,13 +37,10 @@ data class Movie(
     @SerializedName("vote_count")
     var voteCount: Int,
     @SerializedName("vote_average")
-    var voteAverage: Float,
-    @CategoryKey
-    var category: String?
+    var voteAverage: Float
 ) : Parcelable {
 
   constructor(source: Parcel) : this(
-      source.readInt(),
       source.readInt(),
       source.readInt(),
       source.readString(),
@@ -64,14 +58,12 @@ data class Movie(
       source.readString(),
       source.readString(),
       source.readInt(),
-      source.readFloat(),
-      source.readString()
+      source.readFloat()
   )
 
   override fun describeContents() = 0
 
   override fun writeToParcel(dest: Parcel, flags: Int) = with(dest) {
-    writeInt(autoId)
     writeInt(id)
     writeInt(page)
     writeString(title)
@@ -89,10 +81,13 @@ data class Movie(
     writeString(backdropPath)
     writeInt(voteCount)
     writeFloat(voteAverage)
-    writeString(category)
   }
 
+  fun voteAverageSeparate() : Float =
+      voteAverage / 2 // Because app should show Rating Bar max = 5, so need to separate the average vote
+
   companion object {
+
     @JvmField
     val CREATOR: Parcelable.Creator<Movie> = object : Parcelable.Creator<Movie> {
       override fun createFromParcel(source: Parcel): Movie = Movie(source)

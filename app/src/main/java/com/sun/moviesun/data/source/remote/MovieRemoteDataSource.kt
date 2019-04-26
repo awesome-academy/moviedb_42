@@ -1,28 +1,31 @@
 package com.sun.moviesun.data.source.remote
 
-import com.sun.moviesun.data.model.network.MovieResponse
 import com.sun.moviesun.data.source.MovieDataSource
-import io.reactivex.Flowable
+import com.sun.moviesun.data.source.remote.api.MovieService
+import com.sun.moviesun.data.source.remote.connect.RetrofitClient
+import com.sun.moviesun.data.source.remote.response.MovieResponse
+import io.reactivex.Observable
 
 class MovieRemoteDataSource private constructor(
-    client: Client
+    retrofitClient: RetrofitClient
 ): MovieDataSource.Remote {
 
-  private var requestService : MovieService = client.initializeRetrofit()
+  private var requestService : MovieService = retrofitClient.getMovieService()!!
 
-  override fun getMoviesTrendingByDay(): Flowable<ApiResponse<MovieResponse>> = requestService.getMoviesTrendingByDay()
+  override fun getMoviesTrendingByDay(): Observable<MovieResponse> =
+      requestService.getMoviesTrendingByDay()
 
-  override fun getMoviesCategory(category: String?, page: Int): Flowable<ApiResponse<MovieResponse>> =
+  override fun getMoviesCategory(category: String?, page: Int): Observable<MovieResponse> =
       requestService.getMoviesCategory(category, page)
 
   companion object {
     private var sInstance: MovieRemoteDataSource? = null
 
     @JvmStatic
-    fun getInstance(client: Client): MovieRemoteDataSource {
+    fun getInstance(retrofitClient: RetrofitClient): MovieRemoteDataSource {
       if (sInstance == null) {
         synchronized(MovieRemoteDataSource::javaClass) {
-          sInstance = MovieRemoteDataSource(client)
+          sInstance = MovieRemoteDataSource(retrofitClient)
         }
       }
       return sInstance!!

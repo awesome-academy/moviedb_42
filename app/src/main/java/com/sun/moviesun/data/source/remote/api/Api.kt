@@ -1,4 +1,4 @@
-package com.sun.moviesun.data.source.remote
+package com.sun.moviesun.data.source.remote.api
 
 object Api {
   private const val API_KEY = "api_key"
