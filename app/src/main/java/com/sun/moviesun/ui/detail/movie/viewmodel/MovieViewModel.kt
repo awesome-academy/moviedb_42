@@ -1,4 +1,4 @@
-package com.sun.moviesun.ui
+package com.sun.moviesun.ui.detail.movie.viewmodel
 
 import androidx.databinding.BaseObservable
 import androidx.databinding.Bindable
