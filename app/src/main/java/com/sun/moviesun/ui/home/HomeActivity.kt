@@ -6,7 +6,7 @@ import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.sun.moviesun.R
-import com.sun.moviesun.extension.setUpToolbar
+import com.sun.moviesun.util.extension.setUpToolbar
 import kotlinx.android.synthetic.main.home_activity.*
 import org.jetbrains.anko.toast
 

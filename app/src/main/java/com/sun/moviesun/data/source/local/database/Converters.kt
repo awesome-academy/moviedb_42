@@ -1,4 +1,4 @@
-package com.sun.moviesun.data.source.local
+package com.sun.moviesun.data.source.local.database
 
 import androidx.room.TypeConverter
 import com.google.gson.Gson

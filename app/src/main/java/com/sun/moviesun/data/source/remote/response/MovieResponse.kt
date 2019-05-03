@@ -1,4 +1,4 @@
-package com.sun.moviesun.data.model.network
+package com.sun.moviesun.data.source.remote.response
 
 import com.google.gson.annotations.SerializedName
 import com.sun.moviesun.data.model.entity.Movie
@@ -10,4 +10,4 @@ data class MovieResponse(
     val totalResults: Int,
     @SerializedName("total_pages")
     val totalPages: Int
-) : NetworkResponse()
+)
