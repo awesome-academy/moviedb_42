@@ -9,6 +9,16 @@ import com.sun.moviesun.util.extension.requestGlideListener
 object BindingImage {
 
   @JvmStatic
+  @BindingAdapter("bindImageUrl")
+  fun bindImageUrl(imageView: ImageView, url: String?) {
+    url?.let {
+      Glide.with(imageView.context).load(Api.getPosterPath(it))
+          .listener(imageView.context.requestGlideListener(imageView))
+          .into(imageView)
+    }
+  }
+
+  @JvmStatic
   @BindingAdapter("bindSlideUrl")
   fun bindSlideUrl(imageView: ImageView, url: String?) {
     url?.let {

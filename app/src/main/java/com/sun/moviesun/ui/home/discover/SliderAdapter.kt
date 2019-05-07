@@ -9,11 +9,12 @@ import androidx.viewpager.widget.PagerAdapter
 import com.sun.moviesun.R
 import com.sun.moviesun.data.model.entity.Movie
 import com.sun.moviesun.databinding.ItemSliderBinding
-import com.sun.moviesun.ui.detail.movie.viewmodel.MovieViewModel
+import com.sun.moviesun.ui.ItemMovieViewModel
+import com.sun.moviesun.util.OnItemRecyclerViewClick
 
 class SliderAdapter(
-    private val listener: Listener
-) : PagerAdapter(), View.OnClickListener  {
+    private var onItemRecyclerViewClick: OnItemRecyclerViewClick<Movie>? = null
+) : PagerAdapter() {
 
   private val list: ArrayList<Movie> = ArrayList()
 
@@ -25,9 +26,8 @@ class SliderAdapter(
 
   override fun instantiateItem(@NonNull container: ViewGroup, position: Int): Any {
     val binding = DataBindingUtil.inflate(LayoutInflater.from(container.context), R.layout.item_slider, container, true) as ItemSliderBinding
-    binding.viewModel = MovieViewModel()
-    binding.viewModel!!.setMovie(list[position])
-    binding.root.setOnClickListener(this)
+    binding.viewModel = ItemMovieViewModel(onItemRecyclerViewClick)
+    binding.viewModel!!.setData(list[position])
     binding.executePendingBindings()
     return binding.root
   }
@@ -39,14 +39,6 @@ class SliderAdapter(
   override fun isViewFromObject(view: View, obj: Any) = view == obj
 
   override fun getCount() = list.size
-
-  override fun onClick(view: View?) {
-    listener.onTopTrendingItemClick(list[sCurrentPosition])
-  }
-
-  interface Listener {
-    fun onTopTrendingItemClick(movie: Movie)
-  }
 
   companion object {
 

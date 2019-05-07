@@ -8,18 +8,20 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.viewpager.widget.ViewPager
 import com.sun.moviesun.R
+import com.sun.moviesun.base.RecyclerViewPaginator
+import com.sun.moviesun.data.annotation.CategoryKeyDef
 import com.sun.moviesun.data.model.entity.Movie
 import com.sun.moviesun.databinding.DiscoverFragmentBinding
 import com.sun.moviesun.util.extension.provideMovieRepository
+import org.jetbrains.anko.support.v4.toast
 
-class DiscoverFragment : Fragment(), SliderAdapter.Listener,
-    ViewPager.OnPageChangeListener {
+class DiscoverFragment : Fragment(), ViewPager.OnPageChangeListener, DiscoverNavigator {
 
   private lateinit var discoverBinding: DiscoverFragmentBinding
   private lateinit var discoverViewModel: DiscoverViewModel
 
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-    discoverViewModel = DiscoverViewModel(activity!!.applicationContext.provideMovieRepository())
+    discoverViewModel = DiscoverViewModel(activity!!.applicationContext.provideMovieRepository(), this)
     discoverBinding = DataBindingUtil.inflate(inflater, R.layout.discover_fragment, container, false)
     initializeUI()
     return discoverBinding.root
@@ -28,9 +30,24 @@ class DiscoverFragment : Fragment(), SliderAdapter.Listener,
   private fun initializeUI() {
     discoverBinding.run {
       viewModel = discoverViewModel
-      pagerSlider.adapter = SliderAdapter(this@DiscoverFragment)
       indicator.setupWithViewPager(pagerSlider, true)
       pagerSlider.addOnPageChangeListener(this@DiscoverFragment)
+      RecyclerViewPaginator(
+          recyclerView = recyclerNowPlayingMovies,
+          loadMore = { page -> discoverViewModel.loadMovies(CategoryKeyDef.NOW_PLAYING, page) }
+      )
+      RecyclerViewPaginator(
+          recyclerView = recyclerPopularMovies,
+          loadMore = { page -> discoverViewModel.loadMovies(CategoryKeyDef.POPULAR, page) }
+      )
+      RecyclerViewPaginator(
+          recyclerView = recyclerTopRateMovies,
+          loadMore = { page -> discoverViewModel.loadMovies(CategoryKeyDef.TOP_RATED, page) }
+      )
+      RecyclerViewPaginator(
+          recyclerView = recyclerUpComingMovies,
+          loadMore = { page -> discoverViewModel.loadMovies(CategoryKeyDef.UPCOMING, page) }
+      )
     }
   }
 
@@ -39,8 +56,8 @@ class DiscoverFragment : Fragment(), SliderAdapter.Listener,
     discoverViewModel.onCleared()
   }
 
-  override fun onTopTrendingItemClick(movie: Movie) {
-
+  override fun onClickItemMovie(movie: Movie) {
+    toast(R.string.text_coming_soon)
   }
 
   override fun onPageScrollStateChanged(state: Int) {
@@ -57,4 +74,3 @@ class DiscoverFragment : Fragment(), SliderAdapter.Listener,
     fun newInstance() = DiscoverFragment()
   }
 }
-

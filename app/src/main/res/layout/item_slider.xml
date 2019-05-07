@@ -5,12 +5,13 @@
     <data>
         <variable
             name="viewModel"
-            type="com.sun.moviesun.ui.detail.movie.viewmodel.MovieViewModel" />
+            type="com.sun.moviesun.ui.ItemMovieViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:onClick="@{() -> viewModel.onItemClick()}">
 
         <com.flaviofaria.kenburnsview.KenBurnsView
             android:id="@+id/imageSlide"
