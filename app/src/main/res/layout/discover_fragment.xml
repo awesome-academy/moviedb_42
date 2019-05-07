@@ -18,6 +18,24 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+            <androidx.viewpager.widget.ViewPager
+                android:id="@+id/pagerSlider"
+                bindPagerAdapter="@{viewModel.topTrendingMoviesObservable}"
+                bindAutoSwitchSlide="@{true}"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_250"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/indicator"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/pagerSlider"
+                app:tabBackground="@drawable/indicator_selector"
+                app:tabGravity="center"
+                app:tabIndicatorHeight="0dp" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 </layout>
