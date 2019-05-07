@@ -6,9 +6,9 @@ import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.sun.moviesun.R
+import com.sun.moviesun.data.annotation.PageKeyDef
 import com.sun.moviesun.util.extension.setUpToolbar
 import kotlinx.android.synthetic.main.home_activity.*
-import org.jetbrains.anko.toast
 
 class HomeActivity : AppCompatActivity() {
 
@@ -16,7 +16,15 @@ class HomeActivity : AppCompatActivity() {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.home_activity)
     setUpToolbar(toolbar, getString(R.string.app_name))
+    initializeUI()
     initializeEvent()
+  }
+
+  private fun initializeUI() {
+    pagerMain.run {
+      adapter = MainPageAdapter(supportFragmentManager)
+      offscreenPageLimit = (adapter as MainPageAdapter).count
+    }
   }
 
   private fun initializeEvent() {
@@ -25,12 +33,24 @@ class HomeActivity : AppCompatActivity() {
 
   private fun onNavigationItemSelectedListener() = BottomNavigationView.OnNavigationItemSelectedListener { item ->
     when (item.itemId) {
-      R.id.actionDiscover,
-      R.id.actionGenre,
-      R.id.actionFavorite,
-      R.id.actionActor,
-      R.id.actionSetting -> {
-        toast(getString(R.string.text_coming_soon))
+      R.id.actionDiscover -> {
+        pagerMain.currentItem = PageKeyDef.DISCOVER
+        return@OnNavigationItemSelectedListener true
+      }
+      R.id.actionGenre -> {
+        pagerMain.currentItem = PageKeyDef.GENRE
+        return@OnNavigationItemSelectedListener true
+      }
+      R.id.actionFavorite-> {
+        pagerMain.currentItem = PageKeyDef.FAVORITE
+        return@OnNavigationItemSelectedListener true
+      }
+      R.id.actionActor-> {
+        pagerMain.currentItem = PageKeyDef.ACTOR
+        return@OnNavigationItemSelectedListener true
+      }
+      R.id.actionSetting-> {
+        pagerMain.currentItem = PageKeyDef.SETTING
         return@OnNavigationItemSelectedListener true
       }
     }
@@ -45,7 +65,7 @@ class HomeActivity : AppCompatActivity() {
   override fun onOptionsItemSelected(item: MenuItem?): Boolean {
     when (item?.itemId) {
       R.id.actionSearch -> {
-        toast(getString(R.string.text_coming_soon))
+        // coding
         return true
       }
     }
