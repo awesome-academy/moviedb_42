@@ -1,28 +1,39 @@
 package com.sun.moviesun.ui.home.discover
 
 import androidx.databinding.BaseObservable
-import androidx.databinding.ObservableArrayList
-import androidx.databinding.ObservableList
+import androidx.databinding.ObservableField
+import com.sun.moviesun.data.annotation.CategoryKeyDef
 import com.sun.moviesun.data.model.entity.Movie
 import com.sun.moviesun.data.repository.MovieRepository
-import com.sun.moviesun.data.annotation.CategoryKeyDef
+import com.sun.moviesun.util.OnItemRecyclerViewClick
+import com.sun.moviesun.util.extension.notNull
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 
 class DiscoverViewModel constructor(
-    private val movieRepository: MovieRepository
-) : BaseObservable() {
+    private val movieRepository: MovieRepository,
+    private val navigator: DiscoverNavigator
+) : BaseObservable(), OnItemRecyclerViewClick<Movie> {
 
-  val topTrendingMoviesObservable: ObservableList<Movie> = ObservableArrayList()
-  val popularMoviesObservable: ObservableList<Movie> = ObservableArrayList()
-  val nowPlayingMoviesObservable: ObservableList<Movie> = ObservableArrayList()
-  val upComingMoviesObservable: ObservableList<Movie> = ObservableArrayList()
-  val topRateMoviesObservable: ObservableList<Movie> = ObservableArrayList()
+  val adapterTopTrendingObservable: ObservableField<SliderAdapter> = ObservableField()
+  val adapterPopularObservable: ObservableField<MovieAdapter> = ObservableField()
+  val adapterNowPlayingObservable: ObservableField<MovieAdapter> = ObservableField()
+  val adapterUpComingObservable: ObservableField<MovieAdapter> = ObservableField()
+  val adapterTopRateObservable: ObservableField<MovieAdapter> = ObservableField()
   private val compositeDisposable: CompositeDisposable = CompositeDisposable()
 
   init {
+    setUpAdapter()
     loadData()
+  }
+
+  private fun setUpAdapter() {
+    adapterTopTrendingObservable.set(SliderAdapter(this))
+    adapterPopularObservable.set(MovieAdapter(this))
+    adapterNowPlayingObservable.set(MovieAdapter(this))
+    adapterUpComingObservable.set(MovieAdapter(this))
+    adapterTopRateObservable.set(MovieAdapter(this))
   }
 
   fun loadData() {
@@ -39,8 +50,7 @@ class DiscoverViewModel constructor(
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(
             {
-              topTrendingMoviesObservable.clear()
-              topTrendingMoviesObservable.addAll(it.results.subList(FIRST_INDEX, LAST_INDEX))
+              adapterTopTrendingObservable.get()!!.updateData(it.results.subList(FIRST_INDEX, LAST_INDEX))
             }
             ,
             { throwable -> handleError(throwable) })
@@ -55,25 +65,37 @@ class DiscoverViewModel constructor(
             {
               when (category) {
                 CategoryKeyDef.TOP_RATED -> {
-                  topRateMoviesObservable.clear()
-                  topRateMoviesObservable.addAll(it.results)
+                  if (page == DEFAULT_PAGE)
+                    adapterTopRateObservable.get()!!.replaceItems(it.results)
+                  else
+                    adapterTopRateObservable.get()!!.addItems(it.results)
                 }
                 CategoryKeyDef.NOW_PLAYING -> {
-                  nowPlayingMoviesObservable.clear()
-                  nowPlayingMoviesObservable.addAll(it.results)
+                  if (page == DEFAULT_PAGE)
+                    adapterNowPlayingObservable.get()!!.replaceItems(it.results)
+                  else
+                    adapterNowPlayingObservable.get()!!.addItems(it.results)
                 }
                 CategoryKeyDef.POPULAR -> {
-                  popularMoviesObservable.clear()
-                  popularMoviesObservable.addAll(it.results)
+                  if (page == DEFAULT_PAGE)
+                    adapterPopularObservable.get()!!.replaceItems(it.results)
+                  else
+                    adapterPopularObservable.get()!!.addItems(it.results)
                 }
                 CategoryKeyDef.UPCOMING -> {
-                  upComingMoviesObservable.clear()
-                  upComingMoviesObservable.addAll(it.results)
+                  if (page == DEFAULT_PAGE)
+                    adapterUpComingObservable.get()!!.replaceItems(it.results)
+                  else
+                    adapterUpComingObservable.get()!!.addItems(it.results)
                 }
               }
             },
             { throwable -> handleError(throwable) })
     compositeDisposable.add(disposable)
+  }
+
+  override fun onItemClickListener(data: Movie) {
+    navigator.notNull { it.onClickItemMovie(data) }
   }
 
   fun handleError(t: Throwable) {
