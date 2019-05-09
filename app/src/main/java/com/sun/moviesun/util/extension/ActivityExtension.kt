@@ -15,7 +15,6 @@ import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 import com.sun.moviesun.R
 import com.sun.moviesun.data.repository.MovieRepository
-import com.sun.moviesun.data.repository.MovieRepositoryImpl
 import com.sun.moviesun.data.source.local.MovieLocalDataSource
 import com.sun.moviesun.data.source.local.database.AppDatabase
 import com.sun.moviesun.data.source.remote.MovieRemoteDataSource
@@ -52,7 +51,7 @@ fun Context.requestGlideListener(view: View): RequestListener<Drawable> =
     }
 
 fun Context.provideMovieRepository(): MovieRepository {
-  return MovieRepositoryImpl.getInstance(MovieLocalDataSource.getInstance(AppDatabase.getInstance(this)),
+  return MovieRepository.getInstance(MovieLocalDataSource.getInstance(AppDatabase.getInstance(this)),
       MovieRemoteDataSource.getInstance(RetrofitClient(this)))
 }
 
