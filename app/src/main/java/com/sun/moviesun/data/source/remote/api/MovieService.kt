@@ -1,8 +1,8 @@
 package com.sun.moviesun.data.source.remote.api
 
 import com.sun.moviesun.data.annotation.CategoryKey
-import com.sun.moviesun.data.source.remote.response.GenresResponse
-import com.sun.moviesun.data.source.remote.response.MovieResponse
+import com.sun.moviesun.data.model.MovieDetail
+import com.sun.moviesun.data.source.remote.response.*
 import io.reactivex.Observable
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -15,6 +15,21 @@ interface MovieService {
 
   @GET("movie/{type}?language=en&sort_by=popularity.desc")
   fun getMoviesCategory(@Path("type") @CategoryKey category: String?, @Query("page") page: Int): Observable<MovieResponse>
+
+  @GET("movie/{movie_id}/keywords")
+  fun getKeywords(@Path("movie_id") id: Int): Observable<KeywordResponse>
+
+  @GET("movie/{movie_id}/videos")
+  fun getVideos(@Path("movie_id") id: Int): Observable<VideoResponse>
+
+  @GET("movie/{movie_id}/reviews")
+  fun getReviews(@Path("movie_id") id: Int, @Query("page") page: Int): Observable<ReviewResponse>
+
+  @GET("movie/{movie_id}")
+  fun getMovie(@Path("movie_id") id: Int): Observable<MovieDetail>
+
+  @GET("movie/{movie_id}/credits")
+  fun getCredits(@Path("movie_id") id: Int): Observable<CreditResponse>
 
   @GET("genre/movie/list")
   fun getGenres(): Observable<GenresResponse>
