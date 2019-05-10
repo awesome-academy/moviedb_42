@@ -6,6 +6,7 @@ import androidx.viewpager.widget.ViewPager
 import com.sun.moviesun.base.BaseAdapter
 import com.sun.moviesun.data.model.entity.Movie
 import com.sun.moviesun.ui.home.discover.SliderAdapter
+import com.sun.moviesun.ui.home.genres.GenrePageAdapter
 
 object BindingAdapter {
 
@@ -20,5 +21,12 @@ object BindingAdapter {
   @BindingAdapter("bindAdapter")
   fun <T> bindAdapter(recycler: RecyclerView?, adapter: BaseAdapter<T>) {
     recycler!!.adapter = adapter
+  }
+
+  @JvmStatic
+  @BindingAdapter("bindPagerAdapter")
+  fun bindGenrePagerAdapter(pager: ViewPager, adapter: GenrePageAdapter) {
+    pager.adapter = adapter
+    pager.offscreenPageLimit = adapter.count
   }
 }
