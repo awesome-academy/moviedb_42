@@ -21,4 +21,7 @@ interface MovieService {
 
   @GET("discover/movie?language=en&sort_by=popularity.desc")
   fun getMoviesByGenre(@Query("with_genres") genreId: Int, @Query("page") page: Int): Observable<MovieResponse>
+
+  @GET("search/{type}?language=en&sort_by=popularity.desc")
+  fun searchDataByType(@Path("type") type: String, @Query("query") keyword: String, @Query("page") page: Int): Observable<MovieResponse>
 }

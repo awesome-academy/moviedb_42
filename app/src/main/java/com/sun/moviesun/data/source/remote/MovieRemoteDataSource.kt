@@ -1,5 +1,6 @@
 package com.sun.moviesun.data.source.remote
 
+import com.sun.moviesun.data.annotation.SearchKeyDef
 import com.sun.moviesun.data.source.MovieDataSource
 import com.sun.moviesun.data.source.remote.api.MovieService
 import com.sun.moviesun.data.source.remote.connect.RetrofitClient
@@ -25,6 +26,8 @@ class MovieRemoteDataSource private constructor(
   override fun getMoviesByGenre(genreId: Int, page: Int): Observable<MovieResponse> =
       requestService.getMoviesByGenre(genreId, page)
 
+  override fun searchMovie(keyword: String, page: Int): Observable<MovieResponse> =
+      requestService.searchDataByType(SearchKeyDef.MOVIE, keyword, page)
 
   companion object {
     private var sInstance: MovieRemoteDataSource? = null
