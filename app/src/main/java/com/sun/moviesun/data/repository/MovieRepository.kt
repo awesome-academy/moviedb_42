@@ -1,10 +1,10 @@
 package com.sun.moviesun.data.repository
 
+import com.sun.moviesun.data.model.MovieDetail
 import com.sun.moviesun.data.source.MovieDataSource
 import com.sun.moviesun.data.source.local.MovieLocalDataSource
 import com.sun.moviesun.data.source.remote.MovieRemoteDataSource
-import com.sun.moviesun.data.source.remote.response.GenresResponse
-import com.sun.moviesun.data.source.remote.response.MovieResponse
+import com.sun.moviesun.data.source.remote.response.*
 import io.reactivex.Observable
 
 class MovieRepository constructor(
@@ -17,6 +17,21 @@ class MovieRepository constructor(
 
   override fun getMoviesCategory(category: String?, page: Int): Observable<MovieResponse> =
       remote.getMoviesCategory(category, page)
+
+  override fun getKeywords(id: Int): Observable<KeywordResponse> =
+      remote.getKeywords(id)
+
+  override fun getVideos(id: Int): Observable<VideoResponse> =
+      remote.getVideos(id)
+
+  override fun getReviews(id: Int, page: Int): Observable<ReviewResponse> =
+      remote.getReviews(id, page)
+
+  override fun getMovie(id: Int): Observable<MovieDetail> =
+      remote.getMovie(id)
+
+  override fun getCredits(id: Int): Observable<CreditResponse> =
+      remote.getCredits(id)
 
   override fun getGenres(): Observable<GenresResponse> =
       remote.getGenres()
