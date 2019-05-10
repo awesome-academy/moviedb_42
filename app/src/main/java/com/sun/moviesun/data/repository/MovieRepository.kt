@@ -24,6 +24,9 @@ class MovieRepository constructor(
   override fun getMoviesByGenre(genreId: Int, page: Int): Observable<MovieResponse> =
       remote.getMoviesByGenre(genreId, page)
 
+  override fun searchMovie(keyword: String, page: Int): Observable<MovieResponse> =
+      remote.searchMovie(keyword, page)
+
   companion object {
     private var sInstance: MovieRepository? = null
 

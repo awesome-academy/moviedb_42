@@ -12,5 +12,6 @@ interface MovieDataSource {
     fun getMoviesCategory(category: String?, page: Int): Observable<MovieResponse>
     fun getGenres(): Observable<GenresResponse>
     fun getMoviesByGenre(genreId: Int, page: Int): Observable<MovieResponse>
+    fun searchMovie(keyword: String, page: Int): Observable<MovieResponse>
   }
 }
