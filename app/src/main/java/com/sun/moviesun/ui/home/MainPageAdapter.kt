@@ -5,12 +5,14 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import com.sun.moviesun.data.annotation.PageKeyDef
 import com.sun.moviesun.ui.home.discover.DiscoverFragment
+import com.sun.moviesun.ui.home.genres.GenresFragment
 
 class MainPageAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
 
   override fun getItem(position: Int): Fragment =
       when (position) {
         PageKeyDef.DISCOVER -> { DiscoverFragment.newInstance() }
+        PageKeyDef.GENRE -> { GenresFragment.newInstance() }
         else -> { DiscoverFragment.newInstance() }
       }
 
