@@ -9,7 +9,7 @@ import androidx.viewpager.widget.PagerAdapter
 import com.sun.moviesun.R
 import com.sun.moviesun.data.model.entity.Movie
 import com.sun.moviesun.databinding.ItemSliderBinding
-import com.sun.moviesun.ui.ItemMovieViewModel
+import com.sun.moviesun.ui.viewmodel.ItemMovieViewModel
 import com.sun.moviesun.util.OnItemRecyclerViewClick
 
 class SliderAdapter(
