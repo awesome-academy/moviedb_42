@@ -1,4 +1,4 @@
-package com.sun.moviesun.ui.home.search
+package com.sun.moviesun.ui.search
 
 import androidx.databinding.BaseObservable
 import androidx.databinding.ObservableField
@@ -6,7 +6,6 @@ import androidx.databinding.ObservableInt
 import com.sun.moviesun.data.model.entity.Movie
 import com.sun.moviesun.data.repository.MovieRepository
 import com.sun.moviesun.ui.home.genres.MovieGridAdapter
-import com.sun.moviesun.ui.search.SearchNavigator
 import com.sun.moviesun.util.OnItemRecyclerViewClick
 import com.sun.moviesun.util.extension.notNull
 import io.reactivex.android.schedulers.AndroidSchedulers

@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.sun.moviesun.R
 import com.sun.moviesun.data.annotation.PageKeyDef
+import com.sun.moviesun.ui.search.SearchActivity
 import com.sun.moviesun.util.extension.setUpToolbar
 import kotlinx.android.synthetic.main.home_activity.*
 
@@ -65,7 +66,7 @@ class HomeActivity : AppCompatActivity() {
   override fun onOptionsItemSelected(item: MenuItem?): Boolean {
     when (item?.itemId) {
       R.id.actionSearch -> {
-        // coding
+        startActivity(SearchActivity.newInstance(applicationContext))
         return true
       }
     }
