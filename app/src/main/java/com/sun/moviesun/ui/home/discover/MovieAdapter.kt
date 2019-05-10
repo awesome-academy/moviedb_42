@@ -6,7 +6,7 @@ import com.sun.moviesun.base.BaseAdapter
 import com.sun.moviesun.base.BaseViewHolder
 import com.sun.moviesun.data.model.entity.Movie
 import com.sun.moviesun.databinding.ItemMovieBinding
-import com.sun.moviesun.ui.ItemMovieViewModel
+import com.sun.moviesun.ui.viewmodel.ItemMovieViewModel
 import com.sun.moviesun.util.OnItemRecyclerViewClick
 
 class MovieAdapter(

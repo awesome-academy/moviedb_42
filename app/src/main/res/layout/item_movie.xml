@@ -6,7 +6,7 @@
 
         <variable
             name="viewModel"
-            type="com.sun.moviesun.ui.ItemMovieViewModel" />
+            type="com.sun.moviesun.ui.viewmodel.ItemMovieViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
