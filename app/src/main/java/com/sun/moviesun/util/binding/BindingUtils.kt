@@ -2,10 +2,12 @@ package com.sun.moviesun.util.binding
 
 import androidx.databinding.BindingAdapter
 import androidx.viewpager.widget.ViewPager
+import co.lujun.androidtagview.TagContainerLayout
 import com.google.android.youtube.player.YouTubeInitializationResult
 import com.google.android.youtube.player.YouTubeThumbnailLoader
 import com.google.android.youtube.player.YouTubeThumbnailView
 import com.sun.moviesun.BuildConfig
+import com.sun.moviesun.data.model.Keyword
 import com.sun.moviesun.ui.home.discover.SliderAdapter
 import java.util.*
 
@@ -15,6 +17,7 @@ object BindingUtils {
   private const val DELAY = 5000L
   private const val PLUS = 1
   private const val DURATION = 5000L
+  private const val MAX_TAG_LENGTH = 7
 
   @JvmStatic
   @BindingAdapter("bindAutoSwitchSlide")
@@ -57,5 +60,20 @@ object BindingUtils {
       override fun onInitializationFailure(view: YouTubeThumbnailView, result: YouTubeInitializationResult) {}
     }
     thumbnail.initialize(BuildConfig.YOUTUBE_API_KEY, listener)
+  }
+
+  @JvmStatic
+  @BindingAdapter("bindTags")
+  fun bindTags(tagContainer: TagContainerLayout?, keywords: List<Keyword>) {
+    var list: MutableList<String> = ArrayList()
+    for (keyword in keywords) keyword.name?.let { list.add(it) }
+    if (list.size > MAX_TAG_LENGTH) list = list.subList(0, 6)
+    tagContainer!!.tags = list
+  }
+
+  @JvmStatic
+  @BindingAdapter("bindTags")
+  fun bindTagStrings(tagContainer: TagContainerLayout?, list: List<String>?) {
+    list?.let { tagContainer!!.tags = it }
   }
 }
