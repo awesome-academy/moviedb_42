@@ -2,6 +2,7 @@ package com.sun.moviesun.ui.detail.movie
 
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
@@ -9,6 +10,7 @@ import androidx.databinding.DataBindingUtil
 import com.sun.moviesun.R
 import com.sun.moviesun.data.model.*
 import com.sun.moviesun.data.model.entity.Movie
+import com.sun.moviesun.data.source.remote.api.Api
 import com.sun.moviesun.databinding.MovieDetailActivityBinding
 import com.sun.moviesun.util.extension.provideMovieRepository
 import com.sun.moviesun.util.extension.simpleToolbarWithHome
@@ -56,6 +58,7 @@ class MovieDetailActivity : AppCompatActivity(), MovieDetailNavigator {
   }
 
   override fun onClickItemVideo(video: Video) {
+    startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(Api.getYoutubeVideoPath(video.key!!))))
   }
 
   override fun onClickItemReview(review: Review) {
