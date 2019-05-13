@@ -2,6 +2,10 @@ package com.sun.moviesun.util.binding
 
 import androidx.databinding.BindingAdapter
 import androidx.viewpager.widget.ViewPager
+import com.google.android.youtube.player.YouTubeInitializationResult
+import com.google.android.youtube.player.YouTubeThumbnailLoader
+import com.google.android.youtube.player.YouTubeThumbnailView
+import com.sun.moviesun.BuildConfig
 import com.sun.moviesun.ui.home.discover.SliderAdapter
 import java.util.*
 
@@ -32,5 +36,26 @@ object BindingUtils {
       val timer = Timer()
       timer.schedule(timerTask, DELAY, DURATION)
     }
+  }
+
+  @JvmStatic
+  @BindingAdapter("bindThumbnailYoutube")
+  fun bindThumbnailYoutube(thumbnail: YouTubeThumbnailView, key: String) {
+    val listener = object : YouTubeThumbnailView.OnInitializedListener {
+      override fun onInitializationSuccess(view: YouTubeThumbnailView, loader: YouTubeThumbnailLoader) {
+        loader.setVideo(key)
+        loader.setOnThumbnailLoadedListener(
+            object : YouTubeThumbnailLoader.OnThumbnailLoadedListener {
+              override fun onThumbnailLoaded(youTubeThumbnailView: YouTubeThumbnailView, s: String) {
+                loader.release()
+              }
+
+              override fun onThumbnailError(view: YouTubeThumbnailView, error: YouTubeThumbnailLoader.ErrorReason) {}
+            })
+      }
+
+      override fun onInitializationFailure(view: YouTubeThumbnailView, result: YouTubeInitializationResult) {}
+    }
+    thumbnail.initialize(BuildConfig.YOUTUBE_API_KEY, listener)
   }
 }

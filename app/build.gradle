@@ -13,6 +13,7 @@ android {
         versionName rootProject.ext.versionName
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         buildConfigField "String", "MOVIE_DB_API_KEY", "\"${MOVIE_DB_API_KEY}\""
+        buildConfigField "String", "YOUTUBE_API_KEY", "\"${YOUTUBE_API_KEY}\""
         multiDexEnabled true
     }
     buildTypes {
@@ -65,6 +66,8 @@ dependencies {
     implementation "com.flaviofaria:kenburnsview:$rootProject.ext.kenburnsviewVersion"
     implementation "com.github.florent37:diagonallayout:$rootProject.ext.diagonallayoutVersion"
     implementation "com.github.moondroid.coverflow:library:$rootProject.ext.coverflowVersion"
+    // Youtube
+    implementation files('libs/YouTubeAndroidPlayerApi.jar')
     // Testing
     testImplementation "junit:junit:$rootProject.ext.junitVersion"
     testImplementation "androidx.arch.core:core-testing:$rootProject.ext.coreTestingVersion"
