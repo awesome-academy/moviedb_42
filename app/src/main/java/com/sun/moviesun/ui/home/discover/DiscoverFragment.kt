@@ -12,8 +12,8 @@ import com.sun.moviesun.base.RecyclerViewPaginator
 import com.sun.moviesun.data.annotation.CategoryKeyDef
 import com.sun.moviesun.data.model.entity.Movie
 import com.sun.moviesun.databinding.DiscoverFragmentBinding
+import com.sun.moviesun.ui.detail.movie.MovieDetailActivity
 import com.sun.moviesun.util.extension.provideMovieRepository
-import org.jetbrains.anko.support.v4.toast
 
 class DiscoverFragment : Fragment(), ViewPager.OnPageChangeListener, DiscoverNavigator {
 
@@ -57,7 +57,7 @@ class DiscoverFragment : Fragment(), ViewPager.OnPageChangeListener, DiscoverNav
   }
 
   override fun onClickItemMovie(movie: Movie) {
-    toast(R.string.text_coming_soon)
+    startActivity(MovieDetailActivity.newInstance(activity!!.applicationContext, movie))
   }
 
   override fun onPageScrollStateChanged(state: Int) {

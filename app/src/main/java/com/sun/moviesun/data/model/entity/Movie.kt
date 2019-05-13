@@ -26,8 +26,6 @@ data class Movie(
     var posterPath: String? = null,
     @SerializedName("release_date")
     var releaseDate: String? = "",
-    @SerializedName("genre_ids")
-    var genreIds: List<Int>? = ArrayList(),
     @SerializedName("original_title")
     var originalTitle: String? = "",
     @SerializedName("original_language")
@@ -53,7 +51,6 @@ data class Movie(
       ArrayList<Keyword>().apply { source.readList(this, Keyword::class.java.classLoader) },
       source.readString(),
       source.readString(),
-      ArrayList<Int>().apply { source.readList(this, Int::class.java.classLoader) },
       source.readString(),
       source.readString(),
       source.readString(),
