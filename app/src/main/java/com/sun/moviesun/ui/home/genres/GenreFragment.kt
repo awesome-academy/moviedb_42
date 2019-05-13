@@ -10,6 +10,7 @@ import com.sun.moviesun.R
 import com.sun.moviesun.base.RecyclerViewPaginator
 import com.sun.moviesun.data.model.entity.Movie
 import com.sun.moviesun.databinding.GenreFragmentBinding
+import com.sun.moviesun.ui.detail.movie.MovieDetailActivity
 import com.sun.moviesun.util.extension.provideMovieRepository
 import kotlinx.android.synthetic.main.genre_fragment.*
 
@@ -47,6 +48,7 @@ class GenreFragment : Fragment(), GenreNavigator {
   }
 
   override fun onClickItemMovie(movie: Movie) {
+    startActivity(MovieDetailActivity.newInstance(activity!!.applicationContext, movie))
   }
 
   companion object {

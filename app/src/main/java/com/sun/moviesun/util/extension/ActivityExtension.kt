@@ -27,6 +27,15 @@ fun AppCompatActivity.setUpToolbar(toolbar: Toolbar, titleText: String = "") {
   }
 }
 
+fun AppCompatActivity.simpleToolbarWithHome(toolbar: Toolbar, title: String = "") {
+  setSupportActionBar(toolbar)
+  supportActionBar?.run {
+    setDisplayHomeAsUpEnabled(true)
+    setHomeAsUpIndicator(R.drawable.ic_arrow_back_white_24dp)
+    this.title = title
+  }
+}
+
 fun Context.circularRevealedAtCenter(view: View) {
   val cx = (view.left + view.right) / 2
   val cy = (view.top + view.bottom) / 2

@@ -11,6 +11,7 @@ import com.sun.moviesun.R
 import com.sun.moviesun.base.RecyclerViewPaginator
 import com.sun.moviesun.data.model.entity.Movie
 import com.sun.moviesun.databinding.SearchActivityBinding
+import com.sun.moviesun.ui.detail.movie.MovieDetailActivity
 import com.sun.moviesun.util.extension.provideMovieRepository
 import kotlinx.android.synthetic.main.toolbar_search.*
 
@@ -51,6 +52,7 @@ class SearchActivity : AppCompatActivity(), SearchNavigator, TextWatcher {
   override fun beforeTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) { }
 
   override fun onClickItemMovie(movie: Movie) {
+    startActivity(MovieDetailActivity.newInstance(applicationContext, movie))
   }
 
   override fun onStop() {
