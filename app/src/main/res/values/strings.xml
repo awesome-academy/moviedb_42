@@ -15,6 +15,9 @@
     <string name="text_coming_soon">Coming Soon</string>
     <string name="text_trailers">Trailers</string>
     <string name="text_summary">Summary</string>
+    <string name="text_casts">Casts</string>
+    <string name="text_crews">Crews</string>
     <!--Hint-->
     <string name="hint_search">Search movies</string>
+    <string name="slash">/</string>
 </resources>
